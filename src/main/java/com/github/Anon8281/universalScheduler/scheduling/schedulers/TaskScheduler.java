@@ -320,4 +320,11 @@ public interface TaskScheduler {
      * @param plugin specified plugin
      */
     void cancelTasks(Plugin plugin);
+
+    /**
+     * Teleports the entity to the specified location
+     * @param entity Entity to teleport
+     * @param location Location to teleport to
+     */
+    void teleport(Entity entity, Location location);
 }

@@ -194,4 +194,9 @@ public class FoliaScheduler implements TaskScheduler {
     private long getOneIfNotPositive(long x) {
         return x <= 0 ? 1L : x;
     }
+
+    @Override
+    public void teleport(Entity entity, Location location) {
+        entity.teleportAsync(location);
+    }
 }
