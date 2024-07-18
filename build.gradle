@@ -1,0 +1,51 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "7.1.1"
+//    id "maven-publish"
+}
+
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply from: rootDir.toString() + '/dependencies.gradle'
+
+group = 'com.github.streamline-essentials'
+//project.version = "1.5-SNAPSHOT"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+    // JitPack
+    maven { url 'https://repo.papermc.io/repository/maven-public/' }
+}
+
+disableAutoTargetJvm()
+
+dependencies {
+    // Defaults.
+//    compileOnly(files(FILES))
+    shadow(implementation(compileOnly(files(SH_FILES))))
+    annotationProcessor(ANNO)
+    implementation(IMPL)
+    compileOnly(COMP_ONLY)
+    shadow(SHADOW)
+
+    // Other Plugins
+//    compileOnly(OTHER_PLUGINS)
+}
+
+shadowJar {
+
+}
+
+artifacts {
+    archives shadowJar
+}
+
+wrapper {
+    gradleVersion = '8.7'
+    distributionType = Wrapper.DistributionType.ALL
+}

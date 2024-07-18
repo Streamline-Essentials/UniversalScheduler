@@ -3,6 +3,7 @@ package com.github.Anon8281.universalScheduler.scheduling.schedulers;
 import com.github.Anon8281.universalScheduler.scheduling.tasks.MyScheduledTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 
@@ -205,6 +206,48 @@ public interface TaskScheduler {
      * @param period   The period, in ticks.
      */
     default MyScheduledTask runTaskTimer(Entity entity, Runnable runnable, long delay, long period) {
+        return runTaskTimer(runnable, delay, period);
+    }
+
+
+    /**
+     * <b>Folia & Paper</b>: Schedules a task to be executed on the region which owns the location on the next tick
+     * <p>
+     * <b>Bukkit</b>: same as {@link #runTask(Runnable)}
+     *
+     * @param world The world which the region executing should own
+     * @param runnable The task to execute
+     */
+    default MyScheduledTask runTask(World world, int chunkX, int chunkZ, Runnable runnable) {
+        return runTask(runnable);
+    }
+
+    /**
+     * <b>Folia & Paper</b>: Schedules a task to be executed on the region which owns the location after the
+     * specified delay in ticks
+     * <p>
+     * <b>Bukkit</b>: same as {@link #runTaskLater(Runnable, long)}
+     *
+     * @param world The world which the region executing should own
+     * @param runnable The task to execute
+     * @param delay    The delay, in ticks.
+     */
+    default MyScheduledTask runTaskLater(World world, int chunkX, int chunkZ, Runnable runnable, long delay) {
+        return runTaskLater(runnable, delay);
+    }
+
+    /**
+     * <b>Folia & Paper</b>: Schedules a repeating task to be executed on the region which owns the location
+     * after the initial delay with the specified period
+     * <p>
+     * <b>Bukkit</b>: same as {@link #runTaskTimer(Runnable, long, long)}
+     *
+     * @param world The world which the region executing should own
+     * @param runnable The task to execute
+     * @param delay    The initial delay, in ticks.
+     * @param period   The period, in ticks.
+     */
+    default MyScheduledTask runTaskTimer(World world, int chunkX, int chunkZ, Runnable runnable, long delay, long period) {
         return runTaskTimer(runnable, delay, period);
     }
 

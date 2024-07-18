@@ -1,0 +1,14 @@
+ext {
+    IMPL = [
+    ]
+    SHADOW = [
+    ]
+    ANNO = [
+            'dev.folia:folia-api:1.20.4-R0.1-SNAPSHOT',
+    ]
+    COMP_ONLY = [
+            'dev.folia:folia-api:1.20.4-R0.1-SNAPSHOT',
+    ]
+    SH_FILES = [
+    ]
+}

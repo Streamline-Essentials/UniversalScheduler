@@ -7,6 +7,7 @@ import io.papermc.paper.threadedregions.scheduler.GlobalRegionScheduler;
 import io.papermc.paper.threadedregions.scheduler.RegionScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 
@@ -126,6 +127,33 @@ public class FoliaScheduler implements TaskScheduler {
         //Folia exception: Delay ticks may not be <= 0
         delay = getOneIfNotPositive(delay);
         return new FoliaScheduledTask(entity.getScheduler().runAtFixedRate(plugin, task -> runnable.run(), null, delay, period));
+    }
+
+    @Override
+    public MyScheduledTask runTask(World world, int chunkX, int chunkZ, Runnable runnable) {
+        RegionScheduler scheduler = Bukkit.getServer().getRegionScheduler();
+
+        return new FoliaScheduledTask(scheduler.run(plugin, world, chunkX, chunkZ, task -> runnable.run()));
+    }
+
+    @Override
+    public MyScheduledTask runTaskLater(World world, int chunkX, int chunkZ, Runnable runnable, long delay) {
+        RegionScheduler scheduler = Bukkit.getServer().getRegionScheduler();
+
+        //Folia exception: Delay ticks may not be <= 0
+        if (delay <= 0) {
+            return runTask(world, chunkX, chunkZ, runnable);
+        }
+        return new FoliaScheduledTask(scheduler.runDelayed(plugin, world, chunkX, chunkZ, task -> runnable.run(), delay));
+    }
+
+    @Override
+    public MyScheduledTask runTaskTimer(World world, int chunkX, int chunkZ, Runnable runnable, long delay, long period) {
+        RegionScheduler scheduler = Bukkit.getServer().getRegionScheduler();
+
+        //Folia exception: Delay ticks may not be <= 0
+        delay = getOneIfNotPositive(delay);
+        return new FoliaScheduledTask(scheduler.runAtFixedRate(plugin, world, chunkX, chunkZ, task -> runnable.run(), delay, period));
     }
 
     @Override
