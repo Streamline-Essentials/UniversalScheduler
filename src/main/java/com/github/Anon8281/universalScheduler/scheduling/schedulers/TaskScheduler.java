@@ -369,5 +369,5 @@ public interface TaskScheduler {
      * @param entity Entity to teleport
      * @param location Location to teleport to
      */
-    void teleport(Entity entity, Location location);
+    MyScheduledTask teleport(Entity entity, Location location);
 }

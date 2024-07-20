@@ -105,7 +105,7 @@ public class BukkitScheduler implements TaskScheduler {
     }
 
     @Override
-    public void teleport(Entity entity, Location location) {
-        entity.teleport(location);
+    public MyScheduledTask teleport(Entity entity, Location location) {
+        return new BukkitScheduledTask(Bukkit.getScheduler().runTask(plugin, () -> entity.teleport(location)));
     }
 }

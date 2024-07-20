@@ -224,7 +224,7 @@ public class FoliaScheduler implements TaskScheduler {
     }
 
     @Override
-    public void teleport(Entity entity, Location location) {
-        entity.teleportAsync(location);
+    public MyScheduledTask teleport(Entity entity, Location location) {
+        return new FoliaScheduledTask(entity.getScheduler().run(plugin, task -> entity.teleportAsync(location), null));
     }
 }
