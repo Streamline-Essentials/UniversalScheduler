@@ -4,9 +4,9 @@ ext {
     SHADOW = [
     ]
     ANNO = [
-            'dev.folia:folia-api:1.20.4-R0.1-SNAPSHOT',
+            'dev.folia:folia-api:1.21.5-R0.1-SNAPSHOT',
     ]
     COMP_ONLY = [
-            'dev.folia:folia-api:1.20.4-R0.1-SNAPSHOT',
+            'dev.folia:folia-api:1.21.5-R0.1-SNAPSHOT',
     ]
 }

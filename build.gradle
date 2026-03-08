@@ -7,8 +7,8 @@ plugins {
 
 apply from: rootDir.toString() + '/dependencies.gradle'
 
-group = 'gg.drak'
-version = "1.5-SNAPSHOT"
+group = properties['group'] ?: 'gg.drak'
+version = properties['version'] ?: '1.5-SNAPSHOT'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -20,18 +20,9 @@ repositories {
     mavenCentral()
     mavenLocal()
 
-    // Streamline Essentials repository
-    maven {
-        name = "streamline-essentials"
-        url = "https://repo.codemc.org/repository/streamline-essentials/"
-    }
-
-    // JitPack
-    maven { url "https://jitpack.io" }
-
     // PaperMC repositories
-    maven { url 'https://repo.papermc.io/repository/maven-snapshots/' }
     maven { url 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url 'https://repo.papermc.io/repository/maven-snapshots/' }
 }
 
 dependencies {
