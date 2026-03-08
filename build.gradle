@@ -1,28 +1,38 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.1"
-//    id "maven-publish"
+    id 'java'
+    id 'io.freefair.lombok' version '8.10.2'
+    id 'com.gradleup.shadow' version '8.3.6'
+    id 'maven-publish'
 }
 
-apply plugin: 'java'
-apply plugin: 'com.github.johnrengelman.shadow'
 apply from: rootDir.toString() + '/dependencies.gradle'
 
-group = 'com.github.streamline-essentials'
-//project.version = "1.5-SNAPSHOT"
+group = 'gg.drak'
+version = "1.5-SNAPSHOT"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 repositories {
+    // Maven Defaults
     mavenCentral()
-    jcenter()
+    mavenLocal()
+
+    // Streamline Essentials repository
+    maven {
+        name = "streamline-essentials"
+        url = "https://repo.codemc.org/repository/streamline-essentials/"
+    }
+
     // JitPack
+    maven { url "https://jitpack.io" }
+
+    // PaperMC repositories
+    maven { url 'https://repo.papermc.io/repository/maven-snapshots/' }
     maven { url 'https://repo.papermc.io/repository/maven-public/' }
 }
-
-disableAutoTargetJvm()
 
 dependencies {
     // Defaults.
@@ -46,6 +56,34 @@ artifacts {
 }
 
 wrapper {
-    gradleVersion = '8.7'
+    gradleVersion = '9.3.1'
     distributionType = Wrapper.DistributionType.ALL
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId project.group
+            artifactId "$project.name"
+            version project.version
+
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            url = "https://repo.codemc.io/repository/streamline-essentials/"
+
+            def mavenUsername = System.getenv("JENKINS_NEXUS_USERNAME")
+            def mavenPassword = System.getenv("JENKINS_NEXUS_PASSWORD")
+
+            if (mavenUsername != null && mavenPassword != null) {
+                credentials {
+                    username = mavenUsername
+                    password = mavenPassword
+                }
+            }
+        }
+    }
 }
